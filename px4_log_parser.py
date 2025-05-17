@@ -196,7 +196,7 @@ def main():
                         for left, op, val in ops_vals)
             except Exception:
                 continue
-            # Segnala solo sul fronte di salita e rispetta la finestra temporale
+            # Signal the event only when it becomes true and the time window has passed
             if not prev and res and (t/1e6 - last_event_time >= time_window_sec):
                 detected_events.append({
                     "timestamp": t/1e6,
