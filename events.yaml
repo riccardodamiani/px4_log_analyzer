@@ -1,0 +1,647 @@
+events:
+  - id: arm
+    monitored_param: vehicle_control_mode.flag_armed
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Vehicle armed"
+
+  - id: disarm
+    monitored_param: vehicle_control_mode.flag_armed
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Vehicle disarmed"
+
+  - id: termination
+    monitored_param: vehicle_control_mode.flag_control_termination_enabled
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Fly termination detected"
+
+  - id: gcs_connection_lost
+    monitored_param: vehicle_status.gcs_connection_lost
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: warning
+    message: "GCS connection lost"
+
+  - id: rc_lost
+    monitored_param: input_rc.rc_lost
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Rc link lost"
+
+  - id: rc_rssi_warn
+    monitored_param: input_rc.rssi_dbm
+    condition: "value < -85"
+    time_window_sec: 10
+    cause: []
+    severity: warning
+    message: "Rc RSSI signal low"
+
+  - id: crash_detected
+    monitored_param: complex_data.crash_detected
+    condition: "value == 1"
+    time_window_sec: 5
+    cause: []
+    severity: critical
+    message: "Vehicle crash detected"
+
+  - id: failsafe
+    monitored_param: vehicle_status.failsafe
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Vehicle entered failsafe"
+
+  - id: critical_vibration
+    monitored_param: vehicle_imu_status.accel_vibration_metric
+    condition: "value >= 10"
+    time_window_sec: 5
+    cause: []
+    severity: critical
+    message: "Very high vibration"
+
+  - id: warning_vibration
+    monitored_param: vehicle_imu_status.accel_vibration_metric
+    condition: "value > 6 and value < 10"
+    time_window_sec: 5
+    cause: []
+    severity: warning
+    message: "High vibration"
+
+  - id: low_battery
+    monitored_param: battery_status.voltage_v
+    condition: "value < LOW_BATT_VOLT"
+    time_window_sec: 20
+    cause: []
+    severity: warning
+    message: "Low battery"
+
+  - id: crit_battery
+    monitored_param: battery_status.voltage_v
+    condition: "value < CRIT_BATT_VOLT"
+    time_window_sec: 20
+    cause: []
+    severity: critical
+    message: "Critically low battery"
+
+  - id: motor_saturation
+    monitored_param: complex_data.motor_saturation
+    condition: "value == 1"
+    time_window_sec: 2
+    cause: []
+    severity: critical
+    message: "Motor saturation detected"
+
+  - id: cs_baro_hgt
+    monitored_param: estimator_status_flags.cs_baro_hgt
+    condition: "value == 0 and BARO_ENABLED == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "EKF filter stopped fusing baro for altitude estimate"
+
+  - id: cs_ev_pos
+    monitored_param: estimator_status_flags.cs_ev_pos
+    condition: "value == 0 and EV_POS_ENABLED == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "EKF filter stopped fusing external vision for position estimate"
+
+  - id: cs_ev_hgt
+    monitored_param: estimator_status_flags.cs_ev_hgt
+    condition: "value == 0 and EV_ALT_ENABLED == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "EKF filter stopped fusing external vision for altitude estimate"
+
+  - id: cs_ev_vel
+    monitored_param: estimator_status_flags.cs_ev_vel
+    condition: "value == 0 and EV_VEL_ENABLED == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "EKF filter stopped fusing external vision for velocity estimate"
+
+  - id: cs_ev_yaw
+    monitored_param: estimator_status_flags.cs_ev_yaw
+    condition: "value == 0 and EV_YAW_ENABLED == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "EKF filter stopped fusing external vision for yaw estimate"
+
+  - id: cs_gps
+    monitored_param: estimator_status_flags.cs_gps
+    condition: "value == 0 and GPS_POS_ENABLED == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "EKF filter stopped fusing gps for position estimate"
+
+  - id: cs_gps_hgt
+    monitored_param: estimator_status_flags.cs_gps_hgt
+    condition: "value == 0 and GPS_ALT_ENABLED == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "EKF filter stopped fusing gps for altitude estimate"
+
+  - id: cs_gps_yaw
+    monitored_param: estimator_status_flags.cs_gps_yaw
+    condition: "value == 0 and GPS_YAW_ENABLED == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "EKF filter stopped fusing gps for heading estimate"
+
+  - id: cs_mag_hdg
+    monitored_param: estimator_status_flags.cs_mag_hdg
+    condition: "value == 0 and MAG_ENABLED == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "EKF filter stopped fusing mag for heading estimate"
+
+  - id: jamming_indicator
+    monitored_param: sensor_gps.jamming_indicator
+    condition: "value > 30 and GPS_ENABLED == 1"
+    time_window_sec: 10
+    cause: []
+    severity: warning
+    message: "Jamming indicator is high"
+
+  - id: jamming_state
+    monitored_param: sensor_gps.jamming_state
+    condition: "value == 2 and GPS_ENABLED == 1"
+    time_window_sec: 10
+    cause: []
+    severity: warning
+    message: "Warning level of jamming state"
+
+  - id: jamming_state
+    monitored_param: sensor_gps.jamming_state
+    condition: "value == 3 and GPS_ENABLED == 1"
+    time_window_sec: 10
+    cause: []
+    severity: critical
+    message: "Critical level of jamming state"
+
+  - id: gps_fix_lost
+    monitored_param: sensor_gps.fix_type
+    condition: "value < 3 and GPS_ENABLED == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Gps 3D fix lost"
+
+  - id: gps_low_sats
+    monitored_param: sensor_gps.satellites_used
+    condition: "value < 8 and GPS_ENABLED == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Gps low satellites"
+
+  - id: ev_hpos_innovation_test_ratio_warn
+    monitored_param: complex_data.ev_hpos
+    condition: "value > 0.7 and value < 1.0"
+    time_window_sec: 1
+    cause: []
+    severity: warning
+    message: "Warning level of innovation test ratio for external vision horizontal position"
+
+
+  - id: ev_hvel_innovation_test_ratio_warn
+    monitored_param: complex_data.ev_hvel
+    condition: "value > 0.7 and value < 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: warning
+    message: "Warning level of innovation test ratio for external vision horizontal velocity"
+
+
+  - id: ev_vpos_innovation_test_ratio_warn
+    monitored_param: complex_data.ev_vpos
+    condition: "value > 0.7 and value < 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: warning
+    message: "Warning level of innovation test ratio for external vision vertical position"
+
+  - id: ev_vvel_innovation_test_ratio_warn
+    monitored_param: complex_data.ev_vvel
+    condition: "value > 0.7 and value < 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: warning
+    message: "Warning level of innovation test ratio for external vision horizontal velocity"
+
+  - id: gps_hpos_innovation_test_ratio_warn
+    monitored_param: complex_data.gps_hpos
+    condition: "value > 0.7 and value < 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: warning
+    message: "Warning level of innovation test ratio for gps horizontal position"
+
+  - id: gps_hvel_innovation_test_ratio_warn
+    monitored_param: complex_data.gps_hvel
+    condition: "value > 0.7 and value < 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: warning
+    message: "Warning level of innovation test ratio for gps horizontal velocity"
+
+  - id: gps_vpos_innovation_test_ratio_warn
+    monitored_param: complex_data.gps_vpos
+    condition: "value > 0.7 and value < 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: warning
+    message: "Warning level of innovation test ratio for gps vertical position"
+  
+  - id: gps_vvel_innovation_test_ratio_warn
+    monitored_param: complex_data.gps_vvel
+    condition: "value > 0.7 and value < 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: warning
+    message: "Warning level of innovation test ratio for gps vertical velocity"
+
+  - id: hagl_innovation_test_ratio_warn
+    monitored_param: estimator_innovation_test_ratios.hagl
+    condition: "value > 0.7 and value < 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: warning
+    message: "Warning level of innovation test ratio for height above ground"
+
+  - id: hagl_rate_innovation_test_ratio_warn
+    monitored_param: estimator_innovation_test_ratios.hagl_rate
+    condition: "value > 0.7 and value < 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: warning
+    message: "Warning level of innovation test ratio for height rate above ground"
+
+  - id: heading_innovation_test_ratio_warn
+    monitored_param: estimator_innovation_test_ratios.heading
+    condition: "value > 0.7 and value < 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: warning
+    message: "Warning level of innovation test ratio for heading estimate"
+
+  - id: rng_vpos_innovation_test_ratio_warn
+    monitored_param: estimator_innovation_test_ratios.rng_vpos
+    condition: "value > 0.7 and value < 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: warning
+    message: "Warning level of innovation test ratio for range finder altitude"
+
+  - id: mag_innovation_test_ratio_warn
+    monitored_param: complex_data.mag
+    condition: "value > 0.7 and value < 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: warning
+    message: "Warning level of innovation test ratio for mag yaw estimate"
+
+  - id: terr_flow_innovation_test_ratio_warn
+    monitored_param: complex_data.terr_flow
+    condition: "value > 0.7 and value < 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: warning
+    message: "Warning level of innovation test ratio for flow height estimate"
+
+  - id: flow_innovation_test_ratio_warn
+    monitored_param: complex_data.flow
+    condition: "value > 0.7 and value < 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: warning
+    message: "Warning level of innovation test ratio for optical flow"
+
+  - id: ev_hpos_innovation_test_ratio_crit
+    monitored_param: complex_data.ev_hpos
+    condition: "value >= 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: critical
+    message: "Critical level of innovation test ratio for external vision horizontal position"
+
+
+  - id: ev_hvel_innovation_test_ratio_crit
+    monitored_param: complex_data.ev_hvel
+    condition: "value >= 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: critical
+    message: "Critical level of innovation test ratio for external vision horizontal velocity"
+
+
+  - id: ev_vpos_innovation_test_ratio_crit
+    monitored_param: complex_data.ev_vpos
+    condition: "value >= 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: critical
+    message: "Critical level of innovation test ratio for external vision vertical position"
+
+  - id: ev_vvel_innovation_test_ratio_crit
+    monitored_param: complex_data.ev_vvel
+    condition: "value >= 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: critical
+    message: "Critical level of innovation test ratio for external vision horizontal velocity"
+
+  - id: gps_hpos_innovation_test_ratio_crit
+    monitored_param: complex_data.gps_hpos
+    condition: "value >= 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: critical
+    message: "Critical level of innovation test ratio for gps horizontal position"
+
+  - id: gps_hvel_innovation_test_ratio_crit
+    monitored_param: complex_data.gps_hvel
+    condition: "value >= 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: critical
+    message: "Critical level of innovation test ratio for gps horizontal velocity"
+
+  - id: gps_vpos_innovation_test_ratio_crit
+    monitored_param: complex_data.gps_vpos
+    condition: "value >= 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: critical
+    message: "Critical level of innovation test ratio for gps vertical position"
+  
+  - id: gps_vvel_innovation_test_ratio_crit
+    monitored_param: complex_data.gps_vvel
+    condition: "value >= 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: critical
+    message: "Critical level of innovation test ratio for gps vertical velocity"
+
+  - id: hagl_innovation_test_ratio_crit
+    monitored_param: estimator_innovation_test_ratios.hagl
+    condition: "value >= 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: critical
+    message: "Critical level of innovation test ratio for height above ground"
+
+  - id: hagl_rate_innovation_test_ratio_crit
+    monitored_param: estimator_innovation_test_ratios.hagl_rate
+    condition: "value >= 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: critical
+    message: "Critical level of innovation test ratio for height rate above ground"
+
+  - id: heading_innovation_test_ratio_crit
+    monitored_param: estimator_innovation_test_ratios.heading
+    condition: "value >= 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: critical
+    message: "Critical level of innovation test ratio for heading estimate"
+
+  - id: rng_vpos_innovation_test_ratio_crit
+    monitored_param: estimator_innovation_test_ratios.rng_vpos
+    condition: "value >= 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: critical
+    message: "Critical level of innovation test ratio for range finder altitude"
+
+  - id: mag_innovation_test_ratio_crit
+    monitored_param: complex_data.mag
+    condition: "value >= 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: critical
+    message: "Critical level of innovation test ratio for mag yaw estimate"
+
+  - id: terr_flow_innovation_test_ratio_crit
+    monitored_param: complex_data.terr_flow
+    condition: "value >= 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: critical
+    message: "Critical level of innovation test ratio for flow height estimate"
+
+  - id: flow_innovation_test_ratio_crit
+    monitored_param: complex_data.flow
+    condition: "value >= 1.0"
+    time_window_sec: 5
+    cause: []
+    severity: critical
+    message: "Critical level of innovation test ratio for optical flow"
+
+
+
+  - id: angular_velocity_invalid
+    monitored_param: failsafe_flags.angular_velocity_invalid
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: invalid angular velocity"
+
+  - id: attitude_invalid
+    monitored_param: failsafe_flags.attitude_invalid
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: invalid attitude"
+
+  - id: local_altitude_invalid
+    monitored_param: failsafe_flags.local_altitude_invalid
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: local altitude invalid"
+
+  - id: local_position_invalid
+    monitored_param: failsafe_flags.local_position_invalid
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: local position invalid"
+
+  - id: local_position_invalid_relaxed
+    monitored_param: failsafe_flags.local_position_invalid_relaxed
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: local position invalid (relaxed)"
+
+  - id: local_velocity_invalid
+    monitored_param: failsafe_flags.local_velocity_invalid
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: local velocity invalid"
+
+  - id: global_position_invalid
+    monitored_param: failsafe_flags.global_position_invalid
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: global position invalid"
+
+  - id: auto_mission_missing
+    monitored_param: failsafe_flags.auto_mission_missing
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: auto mission missing"
+
+  - id: offboard_control_signal_lost
+    monitored_param: failsafe_flags.offboard_control_signal_lost
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: offboard control signal lost"
+
+  - id: home_position_invalid
+    monitored_param: failsafe_flags.home_position_invalid
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: home position invalid"
+
+  - id: manual_control_signal_lost
+    monitored_param: failsafe_flags.manual_control_signal_lost
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: manual control signal lost"
+
+  - id: gcs_connection_lost_fs
+    monitored_param: failsafe_flags.gcs_connection_lost
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: GCS connection lost"
+
+  - id: battery_warning
+    monitored_param: failsafe_flags.battery_warning
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: battery warning"
+
+  - id: battery_low_remaining_time
+    monitored_param: failsafe_flags.battery_low_remaining_time
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: battery low remaining time"
+
+  - id: battery_unhealthy
+    monitored_param: failsafe_flags.battery_unhealthy
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: battery unhealthy"
+
+  - id: fd_critical_failure
+    monitored_param: failsafe_flags.fd_critical_failure
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: critical failure"
+
+  - id: fd_esc_arming_failure
+    monitored_param: failsafe_flags.fd_esc_arming_failure
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: ESC arming failure"
+
+  - id: fd_imbalanced_prop
+    monitored_param: failsafe_flags.fd_imbalanced_prop
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: imbalanced propeller"
+
+  - id: fd_motor_failure
+    monitored_param: failsafe_flags.fd_motor_failure
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: motor failure"
+
+  - id: mission_failure
+    monitored_param: failsafe_flags.mission_failure
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: mission failure"
+
+  - id: primary_geofence_breached
+    monitored_param: failsafe_flags.primary_geofence_breached
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: primary geofence breached"
+
+  - id: wind_limit_exceeded
+    monitored_param: failsafe_flags.wind_limit_exceeded
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: wind limit exceeded"
+
+  - id: vtol_fixed_wing_system_failure
+    monitored_param: failsafe_flags.vtol_fixed_wing_system_failure
+    condition: "value == 1"
+    time_window_sec: 1
+    cause: []
+    severity: critical
+    message: "Failsafe: VTOL fixed wing system failure"
+
