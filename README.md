@@ -16,6 +16,6 @@ pip install -r requirements.txt
 ## Run
 To run the script open a terminal and run
 ```bash
-python3 ulog_parser.py log.ulg
+python3 px4_log_parser.py log.ulg
 ```
 where log.ulog is the path to the log file you want to analyze

@@ -140,7 +140,7 @@ def print_colored(severity, timestamp, message, rel_time=None):
 # main function to parse the ulog file and detect events
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python3 ulog_parser.py <logfile.ulg>")
+        print("Usage: python3 px4_log_parser.py <logfile.ulg>")
         sys.exit(1)
 
     log_file = sys.argv[1]
