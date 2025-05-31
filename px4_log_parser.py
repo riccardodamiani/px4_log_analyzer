@@ -188,7 +188,10 @@ def main():
         prev = False
         last_event_time = -np.inf
         time_window_sec = event.get("time_window_sec", 0)
-        for t, v in zip(timestamps, values):
+
+        # go through all samples for each motitored log parameter and checks whether the event condition is met
+        # the event is met only when the parameter value changes so that each event is reported only once
+        for idx, (t, v) in enumerate(zip(timestamps, values)):
             if np.isnan(v):
                 continue
             try:
@@ -196,14 +199,24 @@ def main():
                         for left, op, val in ops_vals)
             except Exception:
                 continue
-            # Signal the event only when it becomes true and the time window has passed
-            if not prev and res and (t/1e6 - last_event_time >= time_window_sec):
-                detected_events.append({
-                    "timestamp": t/1e6,
-                    "severity": severity,
-                    "message": event['message']
-                })
-                last_event_time = t/1e6
+            # on the first sample, only report warning and critical events
+            if idx == 0:
+                if not prev and res and (t/1e6 - last_event_time >= time_window_sec) and severity in ("warning", "critical"):
+                    detected_events.append({
+                        "timestamp": t/1e6,
+                        "severity": severity,
+                        "message": event['message']
+                    })
+                    last_event_time = t/1e6
+            else:
+                # from second sample onwards, report all events
+                if not prev and res and (t/1e6 - last_event_time >= time_window_sec):
+                    detected_events.append({
+                        "timestamp": t/1e6,
+                        "severity": severity,
+                        "message": event['message']
+                    })
+                    last_event_time = t/1e6
             prev = res
 
     # add navigation state changes
