@@ -128,6 +128,14 @@ def print_ulog_summary(ulog):
     if hasattr(ulog, "initial_parameters"):
         print(ulog.initial_parameters)
 
+# create a list of all logged messages in the ulog file
+def get_message_log(ulog):
+    message_log_list = []
+    for d in ulog.logged_messages:
+        msg = d.message.decode() if isinstance(d.message, bytes) else str(d.message)
+        message_log_list.append((d.timestamp, msg))
+    return message_log_list
+
 # set battery low and critical voltage values based on px4 parameters
 def set_battery_constants(ulog):
     n_cells = get_param_value(ulog, "BAT1_N_CELLS")
@@ -173,6 +181,7 @@ def main():
     # Set battery constants and fusion flags
     set_battery_constants(ulog)
     get_fusion_flags(ulog)
+    message_log_list = get_message_log(ulog)
 
     #calculate more complex data parameters
     complex_data = compute_complex_data(ulog, events)
@@ -184,6 +193,27 @@ def main():
         param = event['monitored_param']
         cond = event['condition']
         severity = event.get('severity', 'info')
+
+        # checks the logged messages events
+        if param == "message_log":
+            search_str = event["condition"]
+            time_window_sec = event.get("time_window_sec", 0)
+            last_event_time = -np.inf
+            displayed_msg = ""
+            for t, msg in message_log_list:
+                if event['message'] == "$":
+                    displayed_msg = msg
+                else:
+                    displayed_msg = event['message']
+                if search_str in msg and (t/1e6 - last_event_time >= time_window_sec):
+                    detected_events.append({
+                        "timestamp": t/1e6,
+                        "severity": severity,
+                        "message": displayed_msg
+                    })
+                    last_event_time = t/1e6
+            continue  # go to next event
+
         ops_vals = parse_condition(cond)
 
         # Check if the parameter is a complex data field
