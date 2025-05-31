@@ -103,7 +103,7 @@ events:
     severity: critical
     message: "Motor saturation detected"
 
-  - id: cs_baro_hgt
+  - id: cs_baro_hgt_stop_fusion
     monitored_param: estimator_status_flags.cs_baro_hgt
     condition: "value == 0 and BARO_ENABLED == 1"
     time_window_sec: 1
@@ -111,7 +111,7 @@ events:
     severity: critical
     message: "EKF filter stopped fusing baro for altitude estimate"
 
-  - id: cs_ev_pos
+  - id: cs_ev_pos_stop_fusion
     monitored_param: estimator_status_flags.cs_ev_pos
     condition: "value == 0 and EV_POS_ENABLED == 1"
     time_window_sec: 1
@@ -119,7 +119,7 @@ events:
     severity: critical
     message: "EKF filter stopped fusing external vision for position estimate"
 
-  - id: cs_ev_hgt
+  - id: cs_ev_hgt_stop_fusion
     monitored_param: estimator_status_flags.cs_ev_hgt
     condition: "value == 0 and EV_ALT_ENABLED == 1"
     time_window_sec: 1
@@ -127,7 +127,7 @@ events:
     severity: critical
     message: "EKF filter stopped fusing external vision for altitude estimate"
 
-  - id: cs_ev_vel
+  - id: cs_ev_vel_stop_fusion
     monitored_param: estimator_status_flags.cs_ev_vel
     condition: "value == 0 and EV_VEL_ENABLED == 1"
     time_window_sec: 1
@@ -135,7 +135,7 @@ events:
     severity: critical
     message: "EKF filter stopped fusing external vision for velocity estimate"
 
-  - id: cs_ev_yaw
+  - id: cs_ev_yaw_stop_fusion
     monitored_param: estimator_status_flags.cs_ev_yaw
     condition: "value == 0 and EV_YAW_ENABLED == 1"
     time_window_sec: 1
@@ -143,7 +143,7 @@ events:
     severity: critical
     message: "EKF filter stopped fusing external vision for yaw estimate"
 
-  - id: cs_gps
+  - id: cs_gps_stop_fusion
     monitored_param: estimator_status_flags.cs_gps
     condition: "value == 0 and GPS_POS_ENABLED == 1"
     time_window_sec: 1
@@ -151,7 +151,7 @@ events:
     severity: critical
     message: "EKF filter stopped fusing gps for position estimate"
 
-  - id: cs_gps_hgt
+  - id: cs_gps_hgt_stop_fusion
     monitored_param: estimator_status_flags.cs_gps_hgt
     condition: "value == 0 and GPS_ALT_ENABLED == 1"
     time_window_sec: 1
@@ -159,7 +159,7 @@ events:
     severity: critical
     message: "EKF filter stopped fusing gps for altitude estimate"
 
-  - id: cs_gps_yaw
+  - id: cs_gps_yaw_stop_fusion
     monitored_param: estimator_status_flags.cs_gps_yaw
     condition: "value == 0 and GPS_YAW_ENABLED == 1"
     time_window_sec: 1
@@ -167,13 +167,85 @@ events:
     severity: critical
     message: "EKF filter stopped fusing gps for heading estimate"
 
-  - id: cs_mag_hdg
+  - id: cs_mag_hdg_stop_fusion
     monitored_param: estimator_status_flags.cs_mag_hdg
     condition: "value == 0 and MAG_ENABLED == 1"
     time_window_sec: 1
     cause: []
     severity: critical
     message: "EKF filter stopped fusing mag for heading estimate"
+
+  - id: cs_baro_hgt_start_fusion
+    monitored_param: estimator_status_flags.cs_baro_hgt
+    condition: "value == 1 and BARO_ENABLED == 1"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "EKF filter started fusing baro for altitude estimate"
+
+  - id: cs_ev_pos_start_fusion
+    monitored_param: estimator_status_flags.cs_ev_pos
+    condition: "value == 1 and EV_POS_ENABLED == 1"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "EKF filter started fusing external vision for position estimate"
+
+  - id: cs_ev_hgt_start_fusion
+    monitored_param: estimator_status_flags.cs_ev_hgt
+    condition: "value == 1 and EV_ALT_ENABLED == 1"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "EKF filter started fusing external vision for altitude estimate"
+
+  - id: cs_ev_vel_start_fusion
+    monitored_param: estimator_status_flags.cs_ev_vel
+    condition: "value == 1 and EV_VEL_ENABLED == 1"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "EKF filter started fusing external vision for velocity estimate"
+
+  - id: cs_ev_yaw_start_fusion
+    monitored_param: estimator_status_flags.cs_ev_yaw
+    condition: "value == 1 and EV_YAW_ENABLED == 1"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "EKF filter started fusing external vision for yaw estimate"
+
+  - id: cs_gps_start_fusion
+    monitored_param: estimator_status_flags.cs_gps
+    condition: "value == 1 and GPS_POS_ENABLED == 1"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "EKF filter started fusing gps for position estimate"
+
+  - id: cs_gps_hgt_start_fusion
+    monitored_param: estimator_status_flags.cs_gps_hgt
+    condition: "value == 1 and GPS_ALT_ENABLED == 1"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "EKF filter started fusing gps for altitude estimate"
+
+  - id: cs_gps_yaw_start_fusion
+    monitored_param: estimator_status_flags.cs_gps_yaw
+    condition: "value == 1 and GPS_YAW_ENABLED == 1"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "EKF filter started fusing gps for heading estimate"
+
+  - id: cs_mag_hdg_start_fusion
+    monitored_param: estimator_status_flags.cs_mag_hdg
+    condition: "value == 1 and MAG_ENABLED == 1"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "EKF filter started fusing mag for heading estimate"
 
   - id: jamming_indicator
     monitored_param: sensor_gps.jamming_indicator
@@ -644,4 +716,188 @@ events:
     cause: []
     severity: critical
     message: "Failsafe: VTOL fixed wing system failure"
+
+  - id: angular_velocity_invalid_cleared
+    monitored_param: failsafe_flags.angular_velocity_invalid
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: invalid angular velocity flag cleared"
+
+  - id: attitude_invalid_cleared
+    monitored_param: failsafe_flags.attitude_invalid
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: invalid attitude flag cleared"
+
+  - id: local_altitude_invalid_cleared
+    monitored_param: failsafe_flags.local_altitude_invalid
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: local altitude invalid flag cleared"
+
+  - id: local_position_invalid_cleared
+    monitored_param: failsafe_flags.local_position_invalid
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: local position invalid flag cleared"
+
+  - id: local_position_invalid_relaxed_cleared
+    monitored_param: failsafe_flags.local_position_invalid_relaxed
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: local position invalid relaxed flag cleared"
+
+  - id: local_velocity_invalid_cleared
+    monitored_param: failsafe_flags.local_velocity_invalid
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: local velocity invalid flag cleared"
+
+  - id: global_position_invalid_cleared
+    monitored_param: failsafe_flags.global_position_invalid
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: global position invalid flag cleared"
+
+  - id: auto_mission_missing_cleared
+    monitored_param: failsafe_flags.auto_mission_missing
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: auto mission missing flag cleared"
+
+  - id: offboard_control_signal_lost_cleared
+    monitored_param: failsafe_flags.offboard_control_signal_lost
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: offboard control signal lost flag cleared"
+
+  - id: home_position_invalid_cleared
+    monitored_param: failsafe_flags.home_position_invalid
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: home position invalid flag cleared"
+
+  - id: manual_control_signal_lost_cleared
+    monitored_param: failsafe_flags.manual_control_signal_lost
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: manual control signal lost flag cleared"
+
+  - id: gcs_connection_lost_fs_cleared
+    monitored_param: failsafe_flags.gcs_connection_lost
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: GCS connection lost flag cleared"
+
+  - id: battery_warning_cleared
+    monitored_param: failsafe_flags.battery_warning
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: battery warning flag cleared"
+
+  - id: battery_low_remaining_time_cleared
+    monitored_param: failsafe_flags.battery_low_remaining_time
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: battery low remaining time flag cleared"
+
+  - id: battery_unhealthy_cleared
+    monitored_param: failsafe_flags.battery_unhealthy
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: battery unhealthy flag cleared"
+
+  - id: fd_critical_failure_cleared
+    monitored_param: failsafe_flags.fd_critical_failure
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: critical failure flag cleared"
+
+  - id: fd_esc_arming_failure_cleared
+    monitored_param: failsafe_flags.fd_esc_arming_failure
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: ESC arming failure flag cleared"
+
+  - id: fd_imbalanced_prop_cleared
+    monitored_param: failsafe_flags.fd_imbalanced_prop
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: imbalanced propeller flag cleared"
+
+  - id: fd_motor_failure_cleared
+    monitored_param: failsafe_flags.fd_motor_failure
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: motor failure flag cleared"
+
+  - id: mission_failure_cleared
+    monitored_param: failsafe_flags.mission_failure
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: mission failure flag cleared"
+
+  - id: primary_geofence_breached_cleared
+    monitored_param: failsafe_flags.primary_geofence_breached
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: primary geofence breached flag cleared"
+
+  - id: wind_limit_exceeded_cleared
+    monitored_param: failsafe_flags.wind_limit_exceeded
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: wind limit exceeded flag cleared"
+
+  - id: vtol_fixed_wing_system_failure_cleared
+    monitored_param: failsafe_flags.vtol_fixed_wing_system_failure
+    condition: "value == 0"
+    time_window_sec: 1
+    cause: []
+    severity: info
+    message: "Failsafe: VTOL fixed wing system failure flag cleared"
 
