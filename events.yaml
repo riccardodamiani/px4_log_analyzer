@@ -901,3 +901,10 @@ events:
     severity: info
     message: "Failsafe: VTOL fixed wing system failure flag cleared"
 
+  - id: muorb_message
+    monitored_param: message_log
+    condition: "[muorb]"
+    time_window_sec: 0
+    cause: []
+    severity: info
+    message: "$"
