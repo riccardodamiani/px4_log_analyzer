@@ -109,6 +109,25 @@ def get_fusion_flags(ulog):
     CONSTANTS["EV_VEL_ENABLED"]   = bit(ev_ctrl, 2)
     CONSTANTS["EV_YAW_ENABLED"]   = bit(ev_ctrl, 3)
 
+# a function to print all attributes of the ULog object. Used only for debugging purposes.
+def print_ulog_summary(ulog):
+    print("ULog attributes:")
+    for attr in dir(ulog):
+        if not attr.startswith("_"):
+            try:
+                value = getattr(ulog, attr)
+                print(f"{attr}: {type(value)}")
+            except Exception:
+                print(f"{attr}: <unreadable>")
+
+    print("\nTopics in data_list:")
+    for d in ulog.data_list:
+        print(f"  {d.name}")
+
+    print("\nInitial parameters:")
+    if hasattr(ulog, "initial_parameters"):
+        print(ulog.initial_parameters)
+
 # set battery low and critical voltage values based on px4 parameters
 def set_battery_constants(ulog):
     n_cells = get_param_value(ulog, "BAT1_N_CELLS")
