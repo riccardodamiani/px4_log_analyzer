@@ -24,10 +24,10 @@ where log.ulog is the path to the log file you want to analyze
 An event is a particular state change or message you want to pay attention to. All events reported must be written in the events.yaml file.  
 Each event entry has the following parameters:  
 * id: a unique name for the event
-* monitored_param: the ulog parameter you want to pay attention to. Supported ones are all log parameter names, complex_data for more advanced data logs and message_log for px4 logged messages 
+* monitored_param: the ulog parameter you want to pay attention to. Supported ones are all log parameter names, 'complex_data' for more advanced data logs and 'message_log' for px4 logged messages 
 * condition: a condition string that explaned when the event condition is met. In the condition field, 'value' is a keyword that represents the monitored_param. So if you write "value == 1", it means when the monitored_param parameter is changed to 1 the condition is met. Notice that the event is reported only when the monitored_param changes so it's reported only once for each state change.  
-Only for message_log, the condition is a string that needs to be contained in the logged message for the event to be reported (i.e. in the muorb_message event, if a message log contains the string '[muorb]' than it's reported).
+Only for 'message_log', the condition is a string that needs to be contained in the logged message for the event to be reported (i.e. in the muorb_message event, if a message log contains the string '[muorb]' than it's reported).
 * time_window_sec: minimum time window where two events can be reported. For example if two events 'warning_vibration' happens in a time period lower than 5 seconds (time_window_sec for that specific event), than the second event is not reported.
 * cause: not used yet
 * severity: log severity. Can be info, warning or critical
-* message: message that you want to be displayed. Only for message_log you can use the keyword '$' to tell the program to write the full log message instead of a custom one
+* message: message that you want to be displayed. Only for 'message_log' you can use the keyword '$' to tell the program to write the full log message instead of a custom one
